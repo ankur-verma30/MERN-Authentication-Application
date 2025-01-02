@@ -1,11 +1,17 @@
-import React, { useRef, useContext } from "react";
+import React, { useRef, useContext, useEffect } from "react";
 import { assets } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../Context/AppContext";
+import axios from "axios";
+import { toast } from "react-toastify";
+
 
 const EmailVerify = () => {
-  const { backendURL } = useContext(AppContext);
+
   const navigate = useNavigate();
+  axios.defaults.withCredentials = true;
+  const { backendURL, isLoggedIn, userData, getUserData } =
+    useContext(AppContext);
   const inputRefs = useRef([]);
 
   const handleInput = (e, index) => {
@@ -39,9 +45,25 @@ const EmailVerify = () => {
       const optArray = inputRefs.current.map((e) => e.value);
       const otp = optArray.join("");
 
-      const { data } = await axios.post(``);
-    } catch (error) {}
+      const { data } = await axios.post(
+        `${backendURL}/api/auth/verify-account`,
+        { otp }
+      );
+      if (data.success) {
+        toast.success("Account verified successfully");
+        navigate("/");
+        getUserData();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
+
+  useEffect(() => {
+    isLoggedIn && userData && userData.isAccountVerified && navigate("/");
+  }, [isLoggedIn, userData]);
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-200 to-purple-400">
       <img
@@ -50,9 +72,12 @@ const EmailVerify = () => {
         src={assets.logo}
         alt=""
       />
-      <form className="bg-slate-900 p-8 rounded-lg shadow-lg w-96 text-sm">
+      <form
+        onSubmit={onSubmitHandler}
+        className="bg-slate-900 p-8 rounded-lg shadow-lg w-96 text-sm"
+      >
         <h1 className="text-white text-2xl font-semibold text-center mb-4">
-          Email Verify OTP
+          Email Verification OTP
         </h1>
         <p className="text-center mb-6 text-indigo-300">
           Enter the 6-Digit Code sent to your Email
