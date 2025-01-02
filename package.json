@@ -2,7 +2,6 @@
   "name": "mern-authentication-system-using-react",
   "version": "1.0.0",
   "description": "This is the MERN authentication system for basic authentication.",
-  "main": "index.js",
   "scripts": {
     "start": "npm run server",
     "server": "cd server && npm start",
