@@ -13,10 +13,10 @@ function App() {
     <div>
       <ToastContainer /> 
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/email-verify" element={<EmailVerify />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="https://mern-auth-api-rho.vercel.app/" element={<Home />} />
+        <Route path="https://mern-auth-api-rho.vercel.app/login" element={<Login />} />
+        <Route path="https://mern-auth-api-rho.vercel.app/email-verify" element={<EmailVerify />} />
+        <Route path="https://mern-auth-api-rho.vercel.app/reset-password" element={<ResetPassword />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
