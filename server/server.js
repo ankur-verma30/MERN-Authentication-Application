@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 4000;
 connectDB();
 
 app.use(express.json());
-app.use(cors({origin:"https://mern-auth-api-rho.vercel.app/",
+app.use(cors({origin:"https://mern-authentication-application-gamma.vercel.app/",
   methods:["POST","GET"]
   , credentials: true, }));
 app.use(cookieParser());
